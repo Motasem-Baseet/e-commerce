@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('title', 'Data Tables')
 
@@ -10,6 +10,11 @@
                 <p class="card-text">DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, built upon the foundations of progressive enhancement, that adds all of these advanced features to any HTML table.</p>
                 <div class="row my-4">
                     <div class="col-md-12">
+                     <!-- Button to trigger the Create User Modal -->
+                        <button type="button" class="btn btn-outline-primary mb-2" id="createUserBtn">
+                            
+                        Create New User
+                        </button>
                         <div class="card shadow">
                             <div class="card-body">
                                 <!-- Table -->
@@ -19,12 +24,13 @@
                                             <th></th>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <!-- <th>Phone</th>
                                             <th>Department</th>
                                             <th>Company</th>
                                             <th>Address</th>
                                             <th>City</th>
-                                            <th>Date</th>
+                                            <th>Date</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -35,50 +41,16 @@
                                                     <input type="checkbox" class="custom-control-input">
                                                     <label class="custom-control-label"></label>
                                                 </div>
-                                            </td>
-                                            <td>368</td>
-                                            <td>Imani Lara</td>
-                                            <td>(478) 446-9234</td>
-                                            <td>Asset Management</td>
-                                            <td>Borland</td>
-                                            <td>9022 Suspendisse Rd.</td>
-                                            <td>High Wycombe</td>
-                                            <td>Jun 8, 2019</td>
-                                            <td>
-                                                <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="text-muted sr-only">Action</span>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Remove</a>
-                                                    <a class="dropdown-item" href="#">Assign</a>
-                                                </div>
+                                        
                                             </td>
                                         </tr>
-                                        <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input">
                                                     <label class="custom-control-label"></label>
                                                 </div>
                                             </td>
-                                            <td>368</td>
-                                            <td>Renee Wolf</td>
-                                            <td>(734) 594-1676</td>
-                                            <td>Asset Management</td>
-                                            <td>Lycos</td>
-                                            <td>Ap #939-7635 Quisque Road</td>
-                                            <td>Squillace</td>
-                                            <td>Oct 2, 2020</td>
-                                            <td>
-                                                <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="text-muted sr-only">Action</span>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Remove</a>
-                                                    <a class="dropdown-item" href="#">Assign</a>
-                                                </div>
+                                           
                                             </td>
                                         </tr>
                                         <!-- Add more rows as needed -->
@@ -93,18 +65,17 @@
     </div>
 
     @include('partials.modals')
-@endsection
+    @endsection
+    @include('admin.users.modals._createUsersModal')
+    @include('admin.users.modals._editUsersModal')
+    
+    <input type="hidden" id="dataSrc" value="{{ route('user.datatable') }}">
+    <input type="hidden" id="dataSrc1" value="{{ route('user.create') }}">
+    <input type="hidden" id="dataSrc2" value="{{ route('user.edit', ['id' => ':id']) }}">
+    <input type="hidden" id="userUpdateUrl" value="{{ url('admin/users') }}">
 
 @push('scripts')
-    <script>
-        $(document).ready(function () {
-            $('#dataTable-1').DataTable({
-                autoWidth: true,
-                "lengthMenu": [
-                    [16, 32, 64, -1],
-                    [16, 32, 64, "All"]
-                ]
-            });
-        });
-    </script>
+
+
+<script src="{{ asset('backend/users.js') }}"></script>
 @endpush
